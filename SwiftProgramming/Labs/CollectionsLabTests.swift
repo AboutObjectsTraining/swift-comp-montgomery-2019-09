@@ -38,12 +38,6 @@ class CollectionsLabTests: XCTestCase
         case .none: print("Nada")
         case .some(let x): print(x)
         }
-        
-//        let foo = wrappedX
-//
-//        if case .some(let unwrappedX2) = wrappedX {
-//
-//        }
     }
     
     func testMapValues() {
