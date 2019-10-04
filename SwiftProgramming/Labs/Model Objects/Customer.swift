@@ -40,9 +40,9 @@ class Customer: CustomStringConvertible
     var description: String {
         switch (name, address) {
         case let (name?, address?): return "name: \(name)\naddress: \(address)"
-        case let (name?, nil): return "name: \(name)"
-        case let (nil, address?): return "address: \(address)"
-        default: return "Unknown"
+        case let (name?, nil):      return "name: \(name)"
+        case let (nil, address?):   return "address: \(address)"
+        default:                    return "Unknown"
         }
     }
 }
@@ -58,7 +58,7 @@ extension Array where Element: Customer
 //        for customer in self where customer.name ?? "" == name {
 //            return customer
 //        }
-        
+//
 //        for customer in self {
 //            if let currName = customer.name, currName == name {
 //                return customer

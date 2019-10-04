@@ -27,19 +27,6 @@ class CollectionsLabTests: XCTestCase
         XCTAssertEqual(items.count, 2)
     }
     
-    func testOptionals() {
-        
-        let wrappedX = Int("12")
-        if let unwrappedX = wrappedX {
-            print(unwrappedX + 2)
-        }
-        
-        switch wrappedX {
-        case .none: print("Nada")
-        case .some(let x): print(x)
-        }
-    }
-    
     func testMapValues() {
         let items = ["Apple", "Banana", "🍍"]
         print(items)

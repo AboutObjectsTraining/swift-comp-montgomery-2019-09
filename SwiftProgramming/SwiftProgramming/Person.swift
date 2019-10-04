@@ -21,12 +21,6 @@ protocol Likeable
     func unlike()
 }
 
-extension Likeable {
-    var isCool: Bool {
-        return numberOfLikes > 10
-    }
-}
-
 // MARK: - Friendable Protocol
 protocol Friendable
 {
@@ -39,11 +33,20 @@ protocol Friendable
     func unfriend(_ oldFriend: Friendable)
 }
 
+//extension Friendable
+//{
+//    mutating func friend(_ newFriend: Friendable) {
+//        friends.append(newFriend)
+//    }
+//
+//    mutating func unfriend(_ oldFriend: Friendable) {
+//        friends = friends.filter { return $0.friendID != oldFriend.friendID }
+//    }
+//}
+
 // MARK: - Person Class
-class Person: Likeable, Friendable, CustomDebugStringConvertible
+class Person: CustomDebugStringConvertible
 {
-    var isCool: Bool { return true }
-    
     // MARK: Person Properties
     var firstName: String
     var lastName: String
@@ -53,7 +56,7 @@ class Person: Likeable, Friendable, CustomDebugStringConvertible
     
     // MARK: Friendable Properties
     var friendID = 0
-    var friends = [Friendable]()
+    var friends: [Friendable] = []
     
     // MARK: CustomDebugStringConvertible Properties
     var debugDescription: String {
@@ -65,16 +68,10 @@ class Person: Likeable, Friendable, CustomDebugStringConvertible
         self.firstName = firstName
         self.lastName = lastName
     }
-    
-    convenience init(_ firstName: String, _ lastName: String, _ friendID: Int) {
-        self.init(firstName: firstName, lastName: lastName)
-        self.friendID = friendID
-    }
 }
 
-
 // MARK: - Person's Likeable Methods
-extension Person
+extension Person: Likeable
 {
     func like() {
         numberOfLikes += 1
@@ -88,19 +85,32 @@ extension Person
 }
 
 // MARK: - Person's Friendable Methods
-extension Person
+extension Person: Friendable
 {
     func friend(_ newFriend: Friendable) {
         friends.append(newFriend)
     }
     
     func unfriend(_ oldFriend: Friendable) {
-        friends = friends.filter { currFriend in
-            return currFriend.friendID != oldFriend.friendID
+        var index = -1
+        for (currIndex, friend) in friends.enumerated() {
+            if friend.friendID == oldFriend.friendID {
+                index = currIndex
+            }
+        }
+        
+        if index > -1 {
+            friends.remove(at: index)
         }
     }
     
     func unfriend2(_ oldFriend: Friendable) {
+        friends = friends.filter { currFriend in
+            currFriend.friendID != oldFriend.friendID
+        }
+    }
+    
+    func unfriend3(_ oldFriend: Friendable) {
         let index = friends.firstIndex { oldFriend.friendID == $0.friendID }
 
         if index == nil { return }

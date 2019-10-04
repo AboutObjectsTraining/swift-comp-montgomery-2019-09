@@ -3,6 +3,14 @@
 //
 import XCTest
 
+extension Person
+{
+    convenience init(_ firstName: String, _ lastName: String, _ friendID: Int) {
+        self.init(firstName: firstName, lastName: lastName)
+        self.friendID = friendID
+    }
+}
+
 // Note: we need to specify the array type here because otherwise the
 // Swift runtime doesn't see the type [Persons] as a match for [Friendable].
 //
@@ -89,12 +97,5 @@ class ClassesLabTests: XCTestCase
         let y: Float = Float(x)
         // let z: Float = x     // Illegal
         print(y)
-    }
-    
-    func testCoolness() {
-        let p1 = Person(firstName: "Fred", lastName: "Smith")
-        print("isCool == \(p1.isCool)")
-        let p2: Likeable = Person(firstName: "Fred", lastName: "Smith")
-        print("isCool == \(p2.isCool)")
     }
 }
