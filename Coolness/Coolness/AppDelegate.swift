@@ -16,3 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     }
 }
 
+extension AppDelegate
+{
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        UIApplication.shared.sendAction(#selector(resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+    
+//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        guard let touch = touches.first else { return }
+//        let currLocation = touch.location(in: nil)
+//        let prevLocation = touch.previousLocation(in: nil)
+//        touch.view?.frame.origin.x += currLocation.x - prevLocation.x
+//        touch.view?.frame.origin.y += currLocation.y - prevLocation.y
+//    }
+}

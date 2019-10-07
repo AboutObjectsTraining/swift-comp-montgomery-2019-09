@@ -39,6 +39,9 @@ class CoolController: UIViewController
         accessoryView.addSubview(textField)
         textField.borderStyle = .roundedRect
         textField.placeholder = "Enter a label"
+        textField.clearButtonMode = .whileEditing
+        
+        textField.delegate = self
         
         let button = UIButton(type: .system)
         button.setTitle("Add", for: .normal)
@@ -61,5 +64,14 @@ class CoolController: UIViewController
         
         subview1.backgroundColor = UIColor.purple
         subview2.backgroundColor = UIColor.orange
+    }
+}
+
+extension CoolController: UITextFieldDelegate
+{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("In \(#function)")
+        textField.resignFirstResponder()
+        return true
     }
 }
