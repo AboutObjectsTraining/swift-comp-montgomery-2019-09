@@ -14,10 +14,10 @@ extension CoolController: UITextFieldDelegate
 
 class CoolController: UIViewController
 {
-    var contentView: UIView!
-    var textField: UITextField!
+    @IBOutlet var contentView: UIView!
+    @IBOutlet var textField: UITextField!
     
-    @objc func addCell() {
+    @IBAction func addCell() {
         print("In \(#function)")
         let newCell = CoolViewCell()
         newCell.text = textField.text

@@ -11,9 +11,10 @@ private let defaultTextAttributes: [NSAttributedString.Key: Any] = [
     .foregroundColor: UIColor.white
 ]
 
+@IBDesignable
 class CoolViewCell: UIView
 {
-    var text: String? {
+    @IBInspectable var text: String? {
         didSet { sizeToFit() }
     }
     
@@ -27,19 +28,28 @@ class CoolViewCell: UIView
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        layer.borderColor = UIColor.white.cgColor
-        layer.borderWidth = 3
-        layer.cornerRadius = 10
-        layer.masksToBounds = true
-        
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(bounce))
-        recognizer.numberOfTapsRequired = 2
-        addGestureRecognizer(recognizer)
+        configureLayer()
+        configureGestureRecognizers()
     }
     
     // FIXME: Potential crasher
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        configureLayer()
+        configureGestureRecognizers()
+    }
+
+    private func configureLayer() {
+        layer.borderColor = UIColor.white.cgColor
+        layer.borderWidth = 3
+        layer.cornerRadius = 10
+        layer.masksToBounds = true
+    }
+    
+    private func configureGestureRecognizers() {
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(bounce))
+        recognizer.numberOfTapsRequired = 2
+        addGestureRecognizer(recognizer)
     }
 }
 
