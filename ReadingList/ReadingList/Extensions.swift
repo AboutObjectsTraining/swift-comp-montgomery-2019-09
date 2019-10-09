@@ -13,3 +13,7 @@ extension UIStoryboardSegue
     }
 }
 
+extension IndexPath
+{
+    static let zero = IndexPath(row: 0, section: 0)
+}

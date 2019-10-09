@@ -6,10 +6,18 @@ import UIKit
 class DataSource: NSObject
 {
     @IBOutlet var storeController: ReadingListStore!
-    lazy var readingList: ReadingList = storeController.fetchedReadingList
+    private lazy var readingList: ReadingList = storeController.fetchedReadingList
     
     func book(at indexPath: IndexPath) -> Book {
         return readingList.book(at: indexPath)
+    }
+    
+    func insert(book: Book, at indexPath: IndexPath) {
+        readingList.insert(book: book, at: indexPath)
+    }
+    
+    func removeBook(at indexPath: IndexPath) {
+        readingList.removeBook(at: indexPath)
     }
     
     func save() {
@@ -19,6 +27,17 @@ class DataSource: NSObject
 
 extension DataSource: UITableViewDataSource
 {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        removeBook(at: indexPath)
+        save()
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        readingList.moveBook(at: sourceIndexPath, to: destinationIndexPath)
+        save()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return readingList.books.count
     }

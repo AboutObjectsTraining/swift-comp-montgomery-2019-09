@@ -7,12 +7,27 @@ class ReadingListController: UITableViewController
 {
     @IBOutlet var dataSource: DataSource!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationItem.leftBarButtonItem = editButtonItem
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard
-            let controller = segue.realDestination as? ViewBookController,
-            let indexPath = tableView.indexPathForSelectedRow else { return }
-        
-        controller.book = dataSource.book(at: indexPath)
+        switch segue.identifier {
+        case "View":
+            guard
+                let controller = segue.realDestination as? ViewBookController,
+                let indexPath = tableView.indexPathForSelectedRow else {
+                    fatalError("Unable to downcast the destination as an instance of \(ViewBookController.self)")
+            }
+            controller.book = dataSource.book(at: indexPath)
+        case "Add":
+            guard let controller = segue.realDestination as? AddBookController else {
+                fatalError("Unable to downcast the destination as an instance of \(AddBookController.self)")
+            }
+            controller.addBook = { [weak self] book in self?.dataSource.insert(book: book, at: IndexPath.zero) }
+        default: break
+        }
     }
     
     // MARK: Unwind segues
@@ -24,8 +39,6 @@ class ReadingListController: UITableViewController
     
     @IBAction func cancel(unwindSegue: UIStoryboardSegue) { }
 }
-
-
 
 
 
